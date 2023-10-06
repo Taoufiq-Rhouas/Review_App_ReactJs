@@ -1,12 +1,45 @@
 import React, { useState } from 'react'
+import { Rating } from 'react-simple-star-rating'
+
 
 export default function Form() {
     const [name, setName] = useState('');
     const [message,setMessage] = useState('');
+    // rating
+    const [rating, setRating] = useState(0);
+
+    // Catch Rating value
+    const handleRating = (rate) => {
+        setRating(rate);
+        // console.log('====================================');
+        // console.log(rate);
+        // console.log('====================================');
+    }
+
+    const formSubmit = (e) => {
+        e.preventDefault();
+        const review = {
+            id: 1,
+            name,
+            message,
+            rating: rating
+            // rating: rating / 20
+        }
+        console.log('review : ====================================');
+        console.log(review);
+        console.log('====================================');
+    }
+
+    const isDisabled = () => {
+        if(!name || !message || !rating > 0){
+            return true
+        }
+    }
+
 
 
     return (
-        <form className='mt-5' >
+        <form className='mt-5' onSubmit={(e) => formSubmit(e)} >
             <div className='mb-3'>
                 <label htmlFor='name' className='form-label'>Name</label>
                 <input 
@@ -32,8 +65,24 @@ export default function Form() {
                     // defaultValue={''} 
                 />
             </div>
+            {/*  */}
+            <div className='mb-3'>
+                <Rating
+                    onClick={handleRating}
+                    ratingValue={rating}
+                    // onPointerEnter={onPointerEnter}
+                    // onPointerLeave={onPointerLeave}
+                    // onPointerMove={onPointerMove}
+                    /* Available Props */
+                />
+            </div>
+            {/*  */}
             <div className='col-auto'>
-                <button type='submit' className='btn btn-primary mb-3'>Submit</button>
+                <button
+                    disabled={isDisabled()}
+                    type='submit' 
+                    className='btn btn-primary mb-3'
+                >Submit</button>
             </div>
         </form>
     )
