@@ -11,9 +11,6 @@ export default function Form({addReview}) {
     // Catch Rating value
     const handleRating = (rate) => {
         setRating(rate);
-        // console.log('====================================');
-        // console.log(rate);
-        // console.log('====================================');
     }
 
     const formSubmit = (e) => {
@@ -25,10 +22,10 @@ export default function Form({addReview}) {
             rating: rating
             // rating: rating / 20
         }
-        // console.log('review : ====================================');
-        // console.log(review);
-        // console.log('====================================');
         addReview(review);
+        setName('');
+        setMessage('');
+        setRating(0);
     }
 
     const isDisabled = () => {

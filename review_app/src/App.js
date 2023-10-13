@@ -2,6 +2,7 @@ import { useState } from "react";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import ReviewList from "./components/ReviewList";
+import AverageRating from "./components/AverageRating";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           </div>
           <div className="card-body" >
             <Form addReview={addReview} />
+            <AverageRating reviews={reviews} />
             <ReviewList reviews={reviews} />
           </div>
         </div>
