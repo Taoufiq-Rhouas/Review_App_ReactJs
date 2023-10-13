@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Rating } from 'react-simple-star-rating'
 
 
-export default function Form() {
+export default function Form({addReview}) {
     const [name, setName] = useState('');
     const [message,setMessage] = useState('');
     // rating
@@ -25,9 +25,10 @@ export default function Form() {
             rating: rating
             // rating: rating / 20
         }
-        console.log('review : ====================================');
-        console.log(review);
-        console.log('====================================');
+        // console.log('review : ====================================');
+        // console.log(review);
+        // console.log('====================================');
+        addReview(review);
     }
 
     const isDisabled = () => {

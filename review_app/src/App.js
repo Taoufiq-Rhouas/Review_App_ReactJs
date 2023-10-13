@@ -1,7 +1,18 @@
+import { useState } from "react";
 import Form from "./components/Form";
 import Header from "./components/Header";
+import ReviewList from "./components/ReviewList";
 
 function App() {
+
+  const [reviews, setReviews] = useState([]);
+
+  const addReview = (review) => {
+    // ...reviews is : the spread operator
+    setReviews([review, ...reviews]);
+  }
+
+
   return (
     <div className="row my-4" >
       <div className="col-md-8 mx-auto">
@@ -10,7 +21,8 @@ function App() {
             <Header />
           </div>
           <div className="card-body" >
-            <Form />
+            <Form addReview={addReview} />
+            <ReviewList reviews={reviews} />
           </div>
         </div>
       </div>
