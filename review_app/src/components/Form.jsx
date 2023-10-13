@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { Rating } from 'react-simple-star-rating'
+import React, { useState } from 'react';
+import { Rating } from 'react-simple-star-rating';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function Form({addReview}) {
@@ -16,7 +17,8 @@ export default function Form({addReview}) {
     const formSubmit = (e) => {
         e.preventDefault();
         const review = {
-            id: 1,
+            // id: 1,
+            id: uuidv4(),
             name,
             message,
             rating: rating

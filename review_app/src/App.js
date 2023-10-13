@@ -13,6 +13,10 @@ function App() {
     setReviews([review, ...reviews]);
   }
 
+  const removeReview = (id) => {
+    setReviews(reviews.filter(review => review.id !== id))
+  }
+
 
   return (
     <div className="row my-4" >
@@ -24,7 +28,10 @@ function App() {
           <div className="card-body" >
             <Form addReview={addReview} />
             <AverageRating reviews={reviews} />
-            <ReviewList reviews={reviews} />
+            <ReviewList 
+              reviews={reviews} 
+              removeReview={removeReview}
+            />
           </div>
         </div>
       </div>

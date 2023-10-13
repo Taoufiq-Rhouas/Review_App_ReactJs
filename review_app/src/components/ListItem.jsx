@@ -1,7 +1,11 @@
 import React from 'react'
 import { showRating } from './Helpers';
 
-export default function ListItem({review}) {
+export default function ListItem({review , removeReview}) {
+
+    const deleteReview = (id) => {
+        removeReview(id);
+    }
 
     return (
         <li className='list-group-item d-flex justify-content-between align-items-start' >
@@ -14,7 +18,10 @@ export default function ListItem({review}) {
                     }
                 </p>
             </div>
-            <div className="d-flex flex-column align-items-center">
+            <div 
+                className="d-flex flex-column align-items-center"
+                onClick={() => deleteReview(review.id)}
+            >
                 <button className="btn btn-sm btn-danger mb-2">
                     <i className="bi bi-trash"></i>
                 </button>
