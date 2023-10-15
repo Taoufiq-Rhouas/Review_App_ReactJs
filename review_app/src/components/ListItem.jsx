@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { showRating } from './Helpers';
+import { ReviewContext } from './context/ReviewContext';
 
-export default function ListItem({review , removeReview, editReview, reviewToEdit}) {
+export default function ListItem({review}) {
 
     const [disabled, setDisabled] = useState(false);
+    const {removeReview, editReview, reviewToEdit} = useContext(ReviewContext)
 
     useEffect(() => {
         if(reviewToEdit.review && reviewToEdit.review.id === review.id){
@@ -11,7 +13,7 @@ export default function ListItem({review , removeReview, editReview, reviewToEdi
         }else{
             setDisabled(false);
         }
-    },[reviewToEdit])
+    },[reviewToEdit, review.id])
 
     const deleteReview = (id) => {
         removeReview(id);
@@ -32,10 +34,7 @@ export default function ListItem({review , removeReview, editReview, reviewToEdi
                     }
                 </p>
             </div>
-            <div 
-                className="d-flex flex-column align-items-center"
-                
-            >
+            <div className="d-flex flex-column align-items-center">
                 <button 
                     className="btn btn-sm btn-danger mb-2"
                     onClick={() => deleteReview(review.id)}

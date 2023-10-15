@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ReviewContext } from './context/ReviewContext';
 
-export default function AverageRating({reviews}) {
+export default function AverageRating() {
+
+    const {reviews} = useContext(ReviewContext)
 
     const calculateReviewsAverage = () => {
         let average = reviews.reduce((acc,review) => {

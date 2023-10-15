@@ -1,19 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ListItem from './ListItem'
+import { ReviewContext } from './context/ReviewContext'
 
-export default function ReviewList({reviews , removeReview, editReview, reviewToEdit}) {
+export default function ReviewList() {
 
-  return (
-    <ul className='mt-4 list-group' >
-        {
-            reviews.map(review => <ListItem 
-                key={review.id} 
-                review={review} 
-                removeReview={removeReview}
-                editReview={editReview}
-                reviewToEdit={reviewToEdit}
-            />)
-        }
-    </ul>
-  )
+    const {reviews} = useContext(ReviewContext)
+
+    return (
+        <ul className='mt-4 list-group' >
+            {
+                reviews.map(review => <ListItem 
+                    key={review.id} 
+                    review={review}
+                />)
+            }
+        </ul>
+    )
 }

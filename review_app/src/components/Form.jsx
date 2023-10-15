@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { v4 as uuidv4 } from 'uuid';
+import { ReviewContext } from './context/ReviewContext';
 // import { showRating } from './Helpers';
 
 
-export default function Form({addReview, reviewToEdit, updateReview}) {
+export default function Form() {
     const [name, setName] = useState('');
     const [message,setMessage] = useState('');
     // rating
     const [rating, setRating] = useState(0);
-    // const [oldRating, setOldRating] = useState(0);
+
+    const {addReview, reviewToEdit, updateReview} = useContext(ReviewContext)
 
     useEffect(() => {
         if(reviewToEdit.updating){
             setName(reviewToEdit.review.name);
             setMessage(reviewToEdit.review.message);
             setRating(reviewToEdit.review.rating);
-            // setOldRating(reviewToEdit.review.rating);
         }
     },[reviewToEdit])
 
@@ -27,20 +28,10 @@ export default function Form({addReview, reviewToEdit, updateReview}) {
 
     const formSubmit = (e) => {
         e.preventDefault();
-        // const review = {
-        //     // id: 1,
-        //     id: uuidv4(),
-        //     name,
-        //     message,
-        //     rating: rating
-        //     // rating: rating / 20
-        // }
-        // addReview(review);
 
         if(reviewToEdit.updating){
             console.log('FORM reviewToEdit.updating ====================================');
             const review = {
-                // id: 1,
                 id: reviewToEdit.review.id,
                 name,
                 message,
@@ -50,7 +41,6 @@ export default function Form({addReview, reviewToEdit, updateReview}) {
             updateReview(review);
         }else{
             const review = {
-                // id: 1,
                 id: uuidv4(),
                 name,
                 message,
@@ -109,18 +99,10 @@ export default function Form({addReview, reviewToEdit, updateReview}) {
                     /* Available Props */
                 />
             </div>
-            {/* {
-                reviewToEdit.updating && (
-                    <div className='mb-3'>
-                        Old Rating: {showRating(oldRating)}
-                    </div>
-                )
-            } */}
             <div className='col-auto'>
                 <button
                     disabled={isDisabled()}
                     type='submit' 
-                    // className='btn btn-primary mb-3'
                     className={`btn btn-${reviewToEdit.updating ? 'warning' : 'primary'}`}>
                     {
                         reviewToEdit.updating ? 'Update' : 'Submit'
