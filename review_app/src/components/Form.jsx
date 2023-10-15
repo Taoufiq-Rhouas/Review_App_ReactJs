@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { v4 as uuidv4 } from 'uuid';
+// import { showRating } from './Helpers';
 
 
-export default function Form({addReview}) {
+export default function Form({addReview, reviewToEdit, updateReview}) {
     const [name, setName] = useState('');
     const [message,setMessage] = useState('');
     // rating
     const [rating, setRating] = useState(0);
+    // const [oldRating, setOldRating] = useState(0);
+
+    useEffect(() => {
+        if(reviewToEdit.updating){
+            setName(reviewToEdit.review.name);
+            setMessage(reviewToEdit.review.message);
+            setRating(reviewToEdit.review.rating);
+            // setOldRating(reviewToEdit.review.rating);
+        }
+    },[reviewToEdit])
 
     // Catch Rating value
     const handleRating = (rate) => {
@@ -16,15 +27,38 @@ export default function Form({addReview}) {
 
     const formSubmit = (e) => {
         e.preventDefault();
-        const review = {
-            // id: 1,
-            id: uuidv4(),
-            name,
-            message,
-            rating: rating
-            // rating: rating / 20
+        // const review = {
+        //     // id: 1,
+        //     id: uuidv4(),
+        //     name,
+        //     message,
+        //     rating: rating
+        //     // rating: rating / 20
+        // }
+        // addReview(review);
+
+        if(reviewToEdit.updating){
+            console.log('FORM reviewToEdit.updating ====================================');
+            const review = {
+                // id: 1,
+                id: reviewToEdit.review.id,
+                name,
+                message,
+                rating: rating
+                // rating: rating / 20
+            }
+            updateReview(review);
+        }else{
+            const review = {
+                // id: 1,
+                id: uuidv4(),
+                name,
+                message,
+                rating: rating
+                // rating: rating / 20
+            }
+            addReview(review);
         }
-        addReview(review);
         setName('');
         setMessage('');
         setRating(0);
@@ -65,7 +99,6 @@ export default function Form({addReview}) {
                     // defaultValue={''} 
                 />
             </div>
-            {/*  */}
             <div className='mb-3'>
                 <Rating
                     onClick={handleRating}
@@ -76,13 +109,23 @@ export default function Form({addReview}) {
                     /* Available Props */
                 />
             </div>
-            {/*  */}
+            {/* {
+                reviewToEdit.updating && (
+                    <div className='mb-3'>
+                        Old Rating: {showRating(oldRating)}
+                    </div>
+                )
+            } */}
             <div className='col-auto'>
                 <button
                     disabled={isDisabled()}
                     type='submit' 
-                    className='btn btn-primary mb-3'
-                >Submit</button>
+                    // className='btn btn-primary mb-3'
+                    className={`btn btn-${reviewToEdit.updating ? 'warning' : 'primary'}`}>
+                    {
+                        reviewToEdit.updating ? 'Update' : 'Submit'
+                    }
+                </button>
             </div>
         </form>
     )

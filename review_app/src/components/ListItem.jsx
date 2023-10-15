@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { showRating } from './Helpers';
 
-export default function ListItem({review , removeReview}) {
+export default function ListItem({review , removeReview, editReview, reviewToEdit}) {
+
+    const [disabled, setDisabled] = useState(false);
+
+    useEffect(() => {
+        if(reviewToEdit.review && reviewToEdit.review.id === review.id){
+            setDisabled(true);
+        }else{
+            setDisabled(false);
+        }
+    },[reviewToEdit])
 
     const deleteReview = (id) => {
         removeReview(id);
+    }
+
+    const fillTheReviewToEdit = (review) => {
+        editReview(review);
     }
 
     return (
@@ -20,12 +34,19 @@ export default function ListItem({review , removeReview}) {
             </div>
             <div 
                 className="d-flex flex-column align-items-center"
-                onClick={() => deleteReview(review.id)}
+                
             >
-                <button className="btn btn-sm btn-danger mb-2">
+                <button 
+                    className="btn btn-sm btn-danger mb-2"
+                    onClick={() => deleteReview(review.id)}
+                    disabled={disabled}
+                >
                     <i className="bi bi-trash"></i>
                 </button>
-                <button className="btn btn-sm btn-warning">
+                <button 
+                    className="btn btn-sm btn-warning"
+                    onClick={() => fillTheReviewToEdit(review)}
+                >
                     <i className="bi bi-pencil"></i>
                 </button>
             </div>
